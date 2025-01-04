@@ -1,14 +1,11 @@
-
-import Adder from './components/Adder.jsx'
+import Displayer from "./components/Displayer.jsx";
 
 function App() {
-
-
   return (
     <>
-    <Adder/>
+      <Displayer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

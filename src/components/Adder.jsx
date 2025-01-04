@@ -1,20 +1,40 @@
 import { useState } from "react";
 
-function Adder() {
+const Adder = ({ addTodo }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [priority, setPriority] = useState("Medium");
-  const [checklist, setChecklist] = useState("N");
+  const [checklist, setChecklist] = useState(false);
 
-  const submitDB = () => {
-    return undefined;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!title || !dueDate) {
+      alert("Please fill out the task name and date!");
+      return;
+    }
+    addTodo({
+      title,
+      description,
+      priority,
+
+      dueDate,
+      completed: checklist,
+    });
+
+    // Reset form fields
+    setDescription("");
+    setTitle("");
+    setPriority("Medium");
+    setDueDate("");
+    setChecklist(false);
   };
+
   return (
     <>
-      <h1>TO DO APP</h1>
       <form
-        onSubmit={submitDB}
+        onSubmit={handleSubmit}
         className="flex flex-col gap-4 bg-gray-100 p-6 rounded-lg shadow-md w-80"
       >
         <h2 className="text-xl font-bold text-gray-700">Add a New Task</h2>
@@ -35,11 +55,22 @@ function Adder() {
           <label className="block text-sm font-medium text-gray-700">
             description
           </label>
-          <input
+          <textarea
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter your task description"
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Date
+          </label>
+          <input
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
@@ -67,5 +98,5 @@ function Adder() {
       </form>
     </>
   );
-}
+};
 export default Adder;
